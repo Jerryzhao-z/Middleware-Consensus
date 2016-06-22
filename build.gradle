@@ -1,0 +1,36 @@
+plugins {
+//  id 'java'
+  id 'application'
+}
+
+repositories {
+  jcenter()
+  maven{
+        url 'https://raw.github.com/zeeshanejaz/unirest-android/mvn-repo'
+  }
+}
+
+dependencies {
+  compile 'com.mashape.unirest:unirest-java:1.4.6'
+  compile 'org.springframework:spring-context:4.2.5.RELEASE'
+  compile 'com.sparkjava:spark-core:2.5'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.assertj:assertj-core:3.4.1'
+}
+
+sourceCompatibility = '1.8'
+
+// Si le plugin 'application' est activé, spécifier ici la classe principale ...
+mainClassName = 'app.Main'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.12'
+}
+
+task run_args (type: JavaExec, dependsOn: classes){
+    if(project.hasProperty('myargs')){
+        args(myargs.split(','))
+    }
+    main = "app.Main"
+    classpath = sourceSets.main.runtimeClasspath
+}
